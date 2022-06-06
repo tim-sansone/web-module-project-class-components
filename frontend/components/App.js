@@ -23,7 +23,8 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todos
+      todos,
+      hideCompleted: false
     }
   }
 
@@ -48,9 +49,23 @@ export default class App extends React.Component {
      })
   }
 
-  hideCompleted = () => {
+  // hideCompleted = () => {
+  //   this.setState({
+  //     todos: this.state.todos.filter(todo => !todo.completed)
+  //   })
+  // }
+
+  toggleHideCompleted = () => {
     this.setState({
-      todos: this.state.todos.filter(todo => !todo.completed)
+      ...this.state,
+      hideCompleted: !this.state.hideCompleted,
+    })
+  }
+
+  clearAll = () => {
+    this.setState({
+      ...this.state,
+      todos: []
     })
   }
   
@@ -60,9 +75,17 @@ export default class App extends React.Component {
     return (
       <div>
         <h2>Todos</h2>
-        <TodoList todos={this.state.todos} completeItem={this.completeItem}/>
-        <Form addItem={this.addItem} hideCompleted={this.hideCompleted}/>
+        <TodoList
+          todos={this.state.todos}
+          hideCompleted={this.state.hideCompleted}
+          completeItem={this.completeItem}
+        />
+        <Form addItem={this.addItem} />
+        <button onClick={this.toggleHideCompleted}>{this.state.hideCompleted ? "Show Completed" : "Hide Completed"}</button>
+        <button onClick={this.clearAll}>Clear All</button>
       </div>
     )
   }
 }
+
+// hideCompleted={this.hideCompleted}

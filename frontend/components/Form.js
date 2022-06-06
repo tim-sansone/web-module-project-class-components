@@ -22,10 +22,10 @@ export default class Form extends React.Component {
     this.setState({ text: "" })
   }
 
-  handleHide = evt => {
-    evt.preventDefault();
-    this.props.hideCompleted();
-  }
+  // handleHide = evt => {
+  //   evt.preventDefault();
+  //   this.props.hideCompleted();
+  // }
   
   render() {
     return (
@@ -37,7 +37,6 @@ export default class Form extends React.Component {
             onChange={this.handleChange}
           />
           <button>Submit</button>
-          <button onClick={this.handleHide}>Hide Completed</button>
         </form>
     )
   }
