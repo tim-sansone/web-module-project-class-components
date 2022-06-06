@@ -27,6 +27,16 @@ export default class App extends React.Component {
     }
   }
 
+  addItem = (text) => {
+    const newItem = {
+      name: text,
+      id: nanoid(),
+      completed: false
+    }
+
+    this.setState({ todos: [...this.state.todos, newItem] })
+  }
+
   completeItem = (id) => {
     this.setState({ 
       todos: this.state.todos.map(todo => {
@@ -38,14 +48,10 @@ export default class App extends React.Component {
      })
   }
 
-  addItem = (text) => {
-    const newItem = {
-      name: text,
-      id: nanoid(),
-      completed: false
-    }
-
-    this.setState({ todos: [...this.state.todos, newItem] })
+  hideCompleted = () => {
+    this.setState({
+      todos: this.state.todos.filter(todo => !todo.completed)
+    })
   }
   
   
@@ -55,7 +61,7 @@ export default class App extends React.Component {
       <div>
         <h2>Todos</h2>
         <TodoList todos={this.state.todos} completeItem={this.completeItem}/>
-        <Form addItem={this.addItem}/>
+        <Form addItem={this.addItem} hideCompleted={this.hideCompleted}/>
       </div>
     )
   }
