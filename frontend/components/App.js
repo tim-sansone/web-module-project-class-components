@@ -1,4 +1,5 @@
 import React from 'react';
+import { nanoid } from "nanoid"
 import TodoList from "./TodoList";
 import Form from "./Form";
 
@@ -6,12 +7,12 @@ import Form from "./Form";
 const todos = [
   {
     name: 'Organize Garage',
-    id: 1528817077286, // could look different, you could use a timestamp to generate it
+    id: nanoid(),
     completed: false
   },
   {
     name: 'Bake Cookies',
-    id: 1528817084358,
+    id: nanoid(),
     completed: false
   }
 ]
@@ -25,6 +26,27 @@ export default class App extends React.Component {
       todos
     }
   }
+
+  completeItem = (id) => {
+    this.setState({ 
+      todos: this.state.todos.map(todo => {
+        if(todo.id === id){
+          return {...todo, completed: !todo.completed}
+        }
+        return todo;
+      })
+     })
+  }
+
+  addItem = (text) => {
+    const newItem = {
+      name: text,
+      id: nanoid(),
+      completed: false
+    }
+
+    this.setState({ todos: [...this.state.todos, newItem] })
+  }
   
   
   
@@ -32,8 +54,8 @@ export default class App extends React.Component {
     return (
       <div>
         <h2>Todos</h2>
-        <TodoList todos={this.state.todos}/>
-        <Form />
+        <TodoList todos={this.state.todos} completeItem={this.completeItem}/>
+        <Form addItem={this.addItem}/>
       </div>
     )
   }
